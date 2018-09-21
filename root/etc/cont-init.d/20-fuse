@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+[[ -e /dev/fuse ]] && chown abc:abc /dev/fuse
