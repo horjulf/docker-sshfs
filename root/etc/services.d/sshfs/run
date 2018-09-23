@@ -2,9 +2,9 @@
 
 _term() {
 	echo "Caught SIGTERM for SSHFS!"
-	fusermount3 -uz ${SSHFS_MNT_PATH}
+	fusermount3 -uz ${SSHFS_MNT}
 }
 
 trap _term SIGTERM
 
-exec s6-setuidgid abc sshfs -f ${SSHFS_OPTS} ${SSHFS_MNT_PATH}
+exec s6-setuidgid abc sshfs -f ${SSHFS_HOST} ${SSHFS_MNT} ${SSHFS_OPTS}

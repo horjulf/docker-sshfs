@@ -4,7 +4,7 @@ Mount SSHFS on the host with a container.
 
 Command executed in the container:
 
-- `sshfs -f ${SSHFS_OPTS} ${SSHFS_MNT_PATH}`
+- `sshfs -f ${SSHFS_HOST} ${SSHFS_MNT} ${SSHFS_OPTS}`
 
 ## Usage
 
@@ -13,7 +13,8 @@ docker create --name=sshfs \
     -e PUID=<uid> \
     -e PGID=<gid> \
     -e TZ=<timezone> \
-    -e SSHFS_OPTS="-p <port> -o IdentityFile=/config/<ssh_key> -o noatime -o reconnect <user>@<host>:<path>" \
+    -e SSHFS_HOST="<user>@<host>:<path>" \
+    -e SSHFS_OPTS="-p <port> -o IdentityFile=/config/<ssh_key> -o noatime -o reconnect" \
     --cap-add=SYS_ADMIN \
     --device=/dev/fuse \
     -v <config_path>:/config \

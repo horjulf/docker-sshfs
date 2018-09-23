@@ -3,7 +3,9 @@ FROM lsiobase/alpine:edge
 LABEL maintainer="horjulf"
 
 ENV \
-    SSHFS_MNT_PATH=/mnt
+    SSHFS_HOST= \
+    SSHFS_MNT=/mnt \
+    SSHFS_OPTS=
 
 # Install packages
 RUN \
