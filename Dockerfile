@@ -2,6 +2,9 @@ FROM lsiobase/alpine:edge
 
 LABEL maintainer="horjulf"
 
+ENV \
+    SSHFS_MNT_PATH=/mnt
+
 # Install packages
 RUN \
     echo "**** install packages ****" && \

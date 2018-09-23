@@ -1,3 +1,10 @@
-#!/usr/bin/with-contenv sh
+#!/usr/bin/with-contenv bash
 
-exec s6-setuidgid abc sshfs ${SSHFS_OPTS}
+_term() {
+	echo "Caught SIGTERM for SSHFS!"
+	fusermount3 -uz ${SSHFS_MNT_PATH}
+}
+
+trap _term SIGTERM
+
+exec s6-setuidgid abc sshfs -f ${SSHFS_OPTS} ${SSHFS_MNT_PATH}
