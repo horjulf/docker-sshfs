@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bash
 
 echo "Unmounting ${SSHFS_MNT}"
-exec fusermount3 -uz ${SSHFS_MNT}
+exec fusermount3 -uz "${SSHFS_MNT}"

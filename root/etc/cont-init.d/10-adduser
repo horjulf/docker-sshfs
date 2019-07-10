@@ -11,4 +11,4 @@ echo \
 User gid:    $(id -g abc)"
 
 chown abc:abc /config
-chown abc:abc ${SSHFS_MNT}
+chown abc:abc "${SSHFS_MNT}"
