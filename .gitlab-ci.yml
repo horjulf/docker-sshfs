@@ -1,22 +1,41 @@
-image: docker:stable
-services:
-  - docker:stable-dind
+# Anchors
+.build-cmd: &build-cmd |-
+  - docker build --pull --build-arg="TAG=${TAG}" -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" .
+  - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
 
-before_script:
-  - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+.build:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:stable-dind
+  variables:
+    TAG: "3.10"
+  before_script:
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+  script:
+    - *build-cmd
 
 build-master:
-  stage: build
+  extends: .build
   script:
-    - docker build --pull -t "${CI_REGISTRY_IMAGE}" .
-    - docker push "${CI_REGISTRY_IMAGE}"
+    - *build-cmd
+    - docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_REGISTRY_IMAGE}:latest"
+    - docker push "${CI_REGISTRY_IMAGE}:latest"
+  only:
+    - master
+
+build-master-edge:
+  extends: .build
+  variables:
+    TAG: edge
+  script:
+    - *build-cmd
+    - docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_REGISTRY_IMAGE}:${TAG}"
+    - docker push "${CI_REGISTRY_IMAGE}:${TAG}"
   only:
     - master
 
 build:
-  stage: build
-  script:
-    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" .
-    - docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+  extends: .build
   except:
     - master

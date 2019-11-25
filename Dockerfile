@@ -1,4 +1,5 @@
-FROM lsiobase/alpine:3.10
+ARG TAG=3.10
+FROM lsiobase/alpine:${TAG}
 
 LABEL maintainer="horjulf"
 
@@ -12,6 +13,7 @@ RUN \
     echo "**** install packages ****" && \
     apk add --no-cache -U \
         sshfs && \
+    sshfs -V && \
     echo "**** cleanup ****" && \
     rm -rf \
         /tmp/*
