@@ -12,6 +12,7 @@ ENV \
 RUN \
     echo "**** install packages ****" && \
     apk add --no-cache -U \
+        fuse3 \
         sshfs && \
     sshfs -V && \
     echo "**** cleanup ****" && \
