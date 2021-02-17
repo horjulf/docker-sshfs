@@ -13,11 +13,11 @@ variables:
 
 .build:
   stage: build
-  image: docker:stable
+  image: docker:20
   services:
-    - docker:stable-dind
+    - docker:20-dind
   variables:
-    TAG: "3.12"
+    TAG: "3.13"
   before_script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
   script:

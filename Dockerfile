@@ -1,4 +1,4 @@
-ARG TAG=3.12
+ARG TAG=3.13
 FROM sc4h/alpine-s6overlay:${TAG}
 
 LABEL maintainer="horjulf"
